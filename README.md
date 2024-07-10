@@ -31,4 +31,7 @@ Firebase를 활용한 당근마켓 클론 앱 개발 프로젝트입니다. 당�
 - **관리자 글수정삭제 기능**: 관리자가 모든 글을 수정 및 삭제할 수 있는 기능
 
 ## 참고 링크
-* [Firebase로 만드는 당근마켓, 코딩애플] [https://www.youtube.com/watch?v=9RkXchEJgKU] 
+* [Firebase로 만드는 당근마켓, 코딩애플] [https://www.youtube.com/watch?v=9RkXchEJgKU]
+  
+## 회의 시간
+    매주 화 목 오후 4시
