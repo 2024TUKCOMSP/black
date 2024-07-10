@@ -22,7 +22,7 @@ Firebase를 활용한 당근마켓 클론 앱 개발을 목표로 합니다. Agi
 - **버전 관리**: Git, GitHub
 - **CI/CD**: GitHub Actions
 - **백엔드**: Firebase
-- **프론트엔드**: React Native
+- **프론트엔드**: HTML/CSS/JavaScript
 - **AI Coding Assistant**: GPT-4
 - **개발 도구**: VSCode
 - **언어**: Markdown, Yaml
