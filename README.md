@@ -1,5 +1,3 @@
-# BLACK 팀
-
 # 당근마켓 앱 개발 프로젝트
 
 Firebase를 활용한 당근마켓 클론 앱 개발을 목표로 합니다. Agile 개발 방법론, Scrum Framework, Git/GitHub, CI/CD, AI Coding Assistant 등을 활용하여 소프트웨어 개발의 전 과정을 학습합니다.
