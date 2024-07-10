@@ -28,4 +28,4 @@ Firebase를 활용한 당근마켓 클론 앱 개발을 목표로 합니다. Agi
 - **언어**: Markdown, Yaml
 
  ## 참고 링크
-* [Firebase로 만드는 당근마켓, 코딩애플][https://www.youtube.com/watch?v=9RkXchEJgKU] 
+* [Firebase로 만드는 당근마켓, 코딩애플] [https://www.youtube.com/watch?v=9RkXchEJgKU] 
