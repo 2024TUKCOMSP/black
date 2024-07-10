@@ -5,8 +5,8 @@
 Firebase를 활용한 당근마켓 클론 앱 개발을 목표로 합니다. Agile 개발 방법론, Scrum Framework, Git/GitHub, CI/CD, AI Coding Assistant 등을 활용하여 소프트웨어 개발의 전 과정을 학습합니다.
 
 ## 목적
-* Firebase를 활용한 간단한 앱 개발을 통해 경험을 쌓고, 기초적인 역량을 강화하는 데 중점을 둡니다.
-* Git/GitHub, GitHub Actions 등 다양한 툴을 써보며 숙달하는 데 초점을 둡니다.
+* Firebase를 활용한 간단한 앱 개발을 통해 경험을 쌓고, 기초적인 역량을 강화하는 데 초점을 둡니다.
+* Git/GitHub, GitHub Actions 등 다양한 툴을 써보며 숙달하는 데 중점을 둡니다.
 * 위와 같은 목적으로 협업 프로젝트를 진행하며 개발자의 실무적인 기본기를 다지는 것을 목표로 합니다.
 
 ## 목차
