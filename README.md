@@ -19,7 +19,6 @@ Firebase를 활용한 당근마켓 클론 앱 개발 프로젝트입니다. 당�
 - **프론트엔드**: HTML/CSS/JavaScript
 - **AI Coding Assistant**: GPT-4
 - **개발 도구**: VSCode
-- **언어**: Markdown, Yaml
 
 ## 구현해야 할 기능
 - **상품진열페이지**: 등록된 상품들을 리스트로 보여주는 페이지
