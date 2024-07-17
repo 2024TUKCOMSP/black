@@ -67,6 +67,8 @@
   </nav>
 
   <div class="container">
+    상세페이지임
+    <button id="edit">수정하기</button>
     <div class="detail-pic my-4" style="background-image: url('https://picsum.photos/400');"></div>
     <div>
       <h5>올린사람 : 모름</h5>
@@ -102,8 +104,12 @@
       } else {
         console.log('No such document!');
       }
-    }).catch((error) => {
-      console.log('Error getting document:', error);
+
+       var 쿼리스트링 = new URLSearchParams(window.location.search)
+  $('#edit').click(function(){
+    window.location.href = '/edit.html?id=' + 쿼리스트링.get('id')
+  })
+  
     });
   </script>
 
