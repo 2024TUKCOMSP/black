@@ -92,55 +92,66 @@
   </div> 
      
 
-  
+    
 
   <script>
     const db = firebase.firestore();
     const storage = firebase.storage();
 
-    var 뺀거 = localStorage.getItem('user')
-    
-    $('#userName').html(JSON.parse(뺀거).displayName)
+    var storedUser = localStorage.getItem('user');
 
-    firebase.auth().onAuthStateChanged((user)=>{
-      if (user) {
-        console.log(user.uid)
-        console.log(user.displayName)
-        localStorage.setItem('user', JSON.stringify(user))
-      }
-    })
+    if (storedUser) {
+        $('#userName').html(JSON.parse(storedUser).displayName);
+    } else {
+        $('#userName').html("로그인 필요");
+    }
 
-    $('#logout').click(function(){
-        firebase.auth().signOut()
-        localStorage.removeItem('user')
-    })
-    
-    $('#login').click(function(){
-  
-        var 이메일 = $('#email').val();
-        var 패스워드 = $('#pw').val();
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log(user.uid);
+            console.log(user.displayName);
+            localStorage.setItem('user', JSON.stringify(user));
+            $('#userName').html(user.displayName);
+        } else {
+            $('#userName').html("로그인 필요");
+        }
+    });
 
-        firebase.auth().signInWithEmailAndPassword(이메일, 패스워드).then((result)=>{
-            console.log(result.user)
-        })
-    })
+    $('#logout').click(function() {
+        firebase.auth().signOut();
+        localStorage.removeItem('user');
+        $('#userName').html("로그인 필요");
+    });
 
-    $('#register').click(function(){
-  
-        var 이메일 = $('#email-new').val();
-        var 패스워드 = $('#pw-new').val();
-        var 이름 = $('#name-new').val();
+    $('#login').click(function() {
+        var email = $('#email').val();
+        var password = $('#pw').val();
 
-        firebase.auth().createUserWithEmailAndPassword(이메일, 패스워드).then((result)=>{
-            console.log(result)
-            console.log(result.user)
-            result.user.updateProfile( {displayName : 이름} )
-        })
-    })
-        
-    
+        firebase.auth().signInWithEmailAndPassword(email, password).then((result) => {
+            console.log(result.user);
+            localStorage.setItem('user', JSON.stringify(result.user));
+            $('#userName').html(result.user.displayName);
+        }).catch((error) => {
+            console.error(error);
+        });
+    });
 
-  </script>
+    $('#register').click(function() {
+        var email = $('#email-new').val();
+        var password = $('#pw-new').val();
+        var name = $('#name-new').val();
 
+        firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
+            console.log(result);
+            console.log(result.user);
+            result.user.updateProfile({ displayName: name }).then(() => {
+                localStorage.setItem('user', JSON.stringify(result.user));
+                $('#userName').html(result.user.displayName);
+            });
+        }).catch((error) => {
+            console.error(error);
+        });
+    });
+</script>
 </body>
 </html>
