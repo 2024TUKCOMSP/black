@@ -1,0 +1,70 @@
+[debug] [2024-07-16T14:08:55.302Z] ----------------------------------------------------------------------
+[debug] [2024-07-16T14:08:55.305Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kdi33\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2024-07-16T14:08:55.306Z] CLI Version:   13.13.3
+[debug] [2024-07-16T14:08:55.307Z] Platform:      win32
+[debug] [2024-07-16T14:08:55.307Z] Node Version:  v21.7.3
+[debug] [2024-07-16T14:08:55.307Z] Time:          Tue Jul 16 2024 23:08:55 GMT+0900 (대한민국 표준시)
+[debug] [2024-07-16T14:08:55.308Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-07-16T14:08:55.435Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-07-16T14:08:55.436Z] > authorizing via signed-in user (vwi9268@gmail.com)
+[debug] [2024-07-16T14:08:55.436Z] [iam] checking project black-market-129be for permissions ["firebase.projects.get"]
+[debug] [2024-07-16T14:08:55.438Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions [none]
+[debug] [2024-07-16T14:08:55.438Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions x-goog-quota-user=projects/black-market-129be
+[debug] [2024-07-16T14:08:55.438Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-16T14:08:56.229Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions 200
+[debug] [2024-07-16T14:08:56.230Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-16T14:08:56.231Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-16T14:08:56.705Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-16T14:08:56.705Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_74c9f17e-1bb8-4221-96b6-8cfbf0986c33"}
+[info] 
+[info] === Serving from 'C:\Users\kdi33\black'...
+[info] 
+[debug] [2024-07-16T14:08:56.711Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 
+[debug] [2024-07-16T14:08:57.432Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 200
+[debug] [2024-07-16T14:08:57.432Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites {"sites":[{"name":"projects/black-market-129be/sites/black-market-129be","defaultUrl":"https://black-market-129be.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2024-07-16T14:08:57.432Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config [none]
+[debug] [2024-07-16T14:08:58.783Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config 200
+[debug] [2024-07-16T14:08:58.784Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config {"projectId":"black-market-129be","appId":"1:31591800098:web:a2cc1d42e5b2b6aed9197b","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow","authDomain":"black-market-129be.firebaseapp.com","messagingSenderId":"31591800098"}
+[debug] [2024-07-16T14:08:58.790Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-16T14:08:59.193Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-16T14:08:59.194Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_74c9f17e-1bb8-4221-96b6-8cfbf0986c33"}
+[info] i  hosting[black-market-129be]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[black-market-129be]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: ::1 - - [16/Jul/2024:14:09:01 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [16/Jul/2024:14:09:01 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] i  hosting: ::1 - - [16/Jul/2024:14:09:01 +0000] "GET /__/firebase/init.js?useEmulator=true HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [16/Jul/2024:14:09:01 +0000] \"GET /__/firebase/init.js?useEmulator=true HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[debug] [2024-07-16T14:15:43.760Z] ----------------------------------------------------------------------
+[debug] [2024-07-16T14:15:43.763Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kdi33\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2024-07-16T14:15:43.764Z] CLI Version:   13.13.3
+[debug] [2024-07-16T14:15:43.764Z] Platform:      win32
+[debug] [2024-07-16T14:15:43.764Z] Node Version:  v21.7.3
+[debug] [2024-07-16T14:15:43.764Z] Time:          Tue Jul 16 2024 23:15:43 GMT+0900 (대한민국 표준시)
+[debug] [2024-07-16T14:15:43.764Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-07-16T14:15:43.895Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-07-16T14:15:43.896Z] > authorizing via signed-in user (vwi9268@gmail.com)
+[debug] [2024-07-16T14:15:43.896Z] [iam] checking project black-market-129be for permissions ["firebase.projects.get"]
+[debug] [2024-07-16T14:15:43.898Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions [none]
+[debug] [2024-07-16T14:15:43.898Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions x-goog-quota-user=projects/black-market-129be
+[debug] [2024-07-16T14:15:43.898Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-16T14:15:45.184Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions 200
+[debug] [2024-07-16T14:15:45.184Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-16T14:15:45.185Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-16T14:15:45.727Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-16T14:15:45.728Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_74c9f17e-1bb8-4221-96b6-8cfbf0986c33"}
+[info] 
+[info] === Serving from 'C:\Users\kdi33\black'...
+[info] 
+[debug] [2024-07-16T14:15:45.732Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 
+[debug] [2024-07-16T14:15:46.441Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 200
+[debug] [2024-07-16T14:15:46.441Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites {"sites":[{"name":"projects/black-market-129be/sites/black-market-129be","defaultUrl":"https://black-market-129be.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2024-07-16T14:15:46.442Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config [none]
+[debug] [2024-07-16T14:15:47.570Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config 200
+[debug] [2024-07-16T14:15:47.570Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config {"projectId":"black-market-129be","appId":"1:31591800098:web:a2cc1d42e5b2b6aed9197b","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow","authDomain":"black-market-129be.firebaseapp.com","messagingSenderId":"31591800098"}
+[debug] [2024-07-16T14:15:47.577Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-16T14:15:47.921Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-16T14:15:47.921Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_74c9f17e-1bb8-4221-96b6-8cfbf0986c33"}
+[info] i  hosting[black-market-129be]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[black-market-129be]: Local server: http://localhost:5002 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5002\u001b[22m\u001b[24m"}}
+[info] i  hosting: ::1 - - [16/Jul/2024:14:15:49 +0000] "GET / HTTP/1.1" 200 1016 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [16/Jul/2024:14:15:49 +0000] \"GET / HTTP/1.1\" 200 1016 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] i  hosting: ::1 - - [16/Jul/2024:14:15:49 +0000] "GET /favicon.ico HTTP/1.1" 404 - "http://localhost:5002/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [16/Jul/2024:14:15:49 +0000] \"GET /favicon.ico HTTP/1.1\" 404 - \"http://localhost:5002/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
