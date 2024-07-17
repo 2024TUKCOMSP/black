@@ -44,7 +44,6 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">블랙마켓</a>
-      <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -67,79 +66,45 @@
     </div>
   </nav>
 
-  <div class="container mt-3">
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="name" id="name-new">
+  <div class="container">
+    <div class="detail-pic my-4" style="background-image: url('https://picsum.photos/400');"></div>
+    <div>
+      <h5>올린사람 : 모름</h5>
+      <hr>
+      <h5 class="title">상품명</h5>
+      <p class="date">올린날짜</p>
+      <p class="price">가격</p>
     </div>
-    <div class="mb-3">
-      <input type="email" class="form-control" placeholder="email" id="email-new">
-    </div>
-    <div class="mb-3">
-      <input type="password" class="form-control" placeholder="pw" id="pw-new">
-    </div>
-    <button type="submit" class="btn btn-primary" id="register">가입하기</button>
-  </div>
-  
-  <div class="container mt-3">
-    <div class="mb-3">
-      <input type="email" class="form-control" placeholder="email" id="email">
-    </div>
-    <div class="mb-3">
-      <input type="password" class="form-control" placeholder="pw" id="pw">
-    </div>
-    <button type="submit" class="btn btn-primary" id="login">로그인하기</button>
-    <button type="submit" class="btn btn-primary" id="logout">로그아웃</button>
-  </div> 
-     
-
-  
+</div>
 
   <script>
+    
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
-    var 뺀거 = localStorage.getItem('user')
-    
-    $('#userName').html(JSON.parse(뺀거).displayName)
+    var 쿼리스트링 = new URLSearchParams(window.location.search);
 
-    firebase.auth().onAuthStateChanged((user)=>{
-      if (user) {
-        console.log(user.uid)
-        console.log(user.displayName)
-        localStorage.setItem('user', JSON.stringify(user))
+    db.collection('product').doc(쿼리스트링.get('id')).get().then((result) => {
+      if (result.exists) {
+        console.log(result.data());
+        var docData = result.data();
+
+        // Timestamp 변환
+        var date = new Date(docData.날짜.seconds * 1000 + docData.날짜.nanoseconds / 1000000);
+        var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+
+        // 이미지 URL 사용
+        var imageUrl = docData.이미지;
+        // HTML 업데이트
+        $('.detail-pic').css('background-image', `url(${imageUrl})`);
+        $('.title').text(docData.제목);
+        $('.date').text(formattedDate);
+        $('.price').text(docData.가격 + '원');
+      } else {
+        console.log('No such document!');
       }
-    })
-
-    $('#logout').click(function(){
-        firebase.auth().signOut()
-        localStorage.removeItem('user')
-    })
-    
-    $('#login').click(function(){
-  
-        var 이메일 = $('#email').val();
-        var 패스워드 = $('#pw').val();
-
-        firebase.auth().signInWithEmailAndPassword(이메일, 패스워드).then((result)=>{
-            console.log(result.user)
-        })
-    })
-
-    $('#register').click(function(){
-  
-        var 이메일 = $('#email-new').val();
-        var 패스워드 = $('#pw-new').val();
-        var 이름 = $('#name-new').val();
-
-        firebase.auth().createUserWithEmailAndPassword(이메일, 패스워드).then((result)=>{
-            console.log(result)
-            console.log(result.user)
-            result.user.updateProfile( {displayName : 이름} )
-        })
-    })
-        
-    
-
+    }).catch((error) => {
+      console.log('Error getting document:', error);
+    });
   </script>
 
 </body>
