@@ -142,6 +142,11 @@
         var name = $('#name-new').val();
 
         firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
+            
+            var userInfo = { nameInfo : name, emailInfo : email }
+
+            db.collection('user').doc(result.user.uid).set(userInfo)
+          
             console.log(result);
             console.log(result.user);
             result.user.updateProfile({ displayName: name }).then(() => {
