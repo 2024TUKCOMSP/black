@@ -1,0 +1,79 @@
+[debug] [2024-07-20T17:11:31.170Z] ----------------------------------------------------------------------
+[debug] [2024-07-20T17:11:31.173Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kdi33\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2024-07-20T17:11:31.173Z] CLI Version:   13.13.3
+[debug] [2024-07-20T17:11:31.173Z] Platform:      win32
+[debug] [2024-07-20T17:11:31.173Z] Node Version:  v21.7.3
+[debug] [2024-07-20T17:11:31.174Z] Time:          Sun Jul 21 2024 02:11:31 GMT+0900 (대한민국 표준시)
+[debug] [2024-07-20T17:11:31.174Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-07-20T17:11:31.266Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-07-20T17:11:31.266Z] > authorizing via signed-in user (vwi9268@gmail.com)
+[debug] [2024-07-20T17:11:31.266Z] [iam] checking project black-market-129be for permissions ["firebase.projects.get"]
+[debug] [2024-07-20T17:11:31.267Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions [none]
+[debug] [2024-07-20T17:11:31.268Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions x-goog-quota-user=projects/black-market-129be
+[debug] [2024-07-20T17:11:31.268Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-20T17:11:32.060Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions 200
+[debug] [2024-07-20T17:11:32.060Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/black-market-129be:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-20T17:11:32.061Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-20T17:11:32.514Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-20T17:11:32.514Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_62730cbb-14ec-43ae-a4b3-b3a9643f3f9c"}
+[info] 
+[info] === Serving from 'C:\Users\kdi33\black'...
+[info] 
+[debug] [2024-07-20T17:11:32.522Z] defaultcredentials: writing to file C:\Users\kdi33\AppData\Roaming\firebase\vwi9268_gmail_com_application_default_credentials.json
+[debug] [2024-07-20T17:11:32.523Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 
+[debug] [2024-07-20T17:11:32.526Z] Setting GAC to C:\Users\kdi33\AppData\Roaming\firebase\vwi9268_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\kdi33\\AppData\\Roaming\\firebase\\vwi9268_gmail_com_application_default_credentials.json"}}
+[debug] [2024-07-20T17:11:32.527Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/adminSdkConfig [none]
+[debug] [2024-07-20T17:11:33.284Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites 200
+[debug] [2024-07-20T17:11:33.285Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/black-market-129be/sites {"sites":[{"name":"projects/black-market-129be/sites/black-market-129be","defaultUrl":"https://black-market-129be.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2024-07-20T17:11:33.285Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config [none]
+[debug] [2024-07-20T17:11:33.532Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/adminSdkConfig 200
+[debug] [2024-07-20T17:11:33.532Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/adminSdkConfig {"projectId":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"}
+[debug] [2024-07-20T17:11:34.429Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config 200
+[debug] [2024-07-20T17:11:34.430Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be/webApps/-/config {"projectId":"black-market-129be","appId":"1:31591800098:web:a2cc1d42e5b2b6aed9197b","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3","apiKey":"AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow","authDomain":"black-market-129be.firebaseapp.com","messagingSenderId":"31591800098"}
+[debug] [2024-07-20T17:11:34.439Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be [none]
+[debug] [2024-07-20T17:11:34.704Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be 200
+[debug] [2024-07-20T17:11:34.704Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/black-market-129be {"projectId":"black-market-129be","projectNumber":"31591800098","displayName":"Black Market","name":"projects/black-market-129be","resources":{"hostingSite":"black-market-129be","storageBucket":"black-market-129be.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE","etag":"1_62730cbb-14ec-43ae-a4b3-b3a9643f3f9c"}
+[info] i  functions: Watching "C:\Users\kdi33\black\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\kdi33\\black\\functions\" for Cloud Functions..."}}
+[info] i  hosting[black-market-129be]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[black-market-129be]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[debug] [2024-07-20T17:11:34.723Z] Validating nodejs source
+[debug] [2024-07-20T17:11:35.853Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.2.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2024-07-20T17:11:35.853Z] Building nodejs source
+[debug] [2024-07-20T17:11:35.854Z] Failed to find version of module node: reached end of search path C:\Users\kdi33\black\functions\node_modules
+[warn] !  functions: Your requested "node" version "18" doesn't match your global version "21". Using node@21 from host. 
+[debug] [2024-07-20T17:11:35.858Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-07-20T17:11:35.871Z] Found firebase-functions binary at 'C:\Users\kdi33\black\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8677
+
+[debug] [2024-07-20T17:11:36.339Z] Got response from /__/functions.yaml {"endpoints":{"hello":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"region":["asia-northeast3"],"httpsTrigger":{},"entryPoint":"hello"},"createAlert":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"region":["asia-northeast3"],"eventTrigger":{"eventType":"providers/cloud.firestore/eventTypes/document.create","eventFilters":{"resource":"projects/black-market-129be/databases/(default)/documents/chatroom/{docid}"},"retry":false},"labels":{},"entryPoint":"createAlert"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] i  hosting: ::1 - - [20/Jul/2024:17:11:37 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [20/Jul/2024:17:11:37 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] i  hosting: ::1 - - [20/Jul/2024:17:11:41 +0000] "GET /login.html HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [20/Jul/2024:17:11:41 +0000] \"GET /login.html HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] +  functions: Loaded functions definitions from source: hello, createAlert. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: hello, createAlert."}}
+[info] +  functions[asia-northeast3-hello]: http function initialized (http://localhost:5001/black-market-129be/asia-northeast3/hello). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://localhost:5001/black-market-129be/asia-northeast3/hello)."}}
+[info] i  functions[asia-northeast3-createAlert]: function ignored because the firestore emulator does not exist or is not running. {"metadata":{"emulator":{"name":"functions"},"message":"function ignored because the firestore emulator does not exist or is not running."}}
+[info] i  hosting: ::1 - - [20/Jul/2024:17:12:04 +0000] "GET /detail.html?id=TEFoZZtPHpxfRN9VVy7m HTTP/1.1" 200 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [20/Jul/2024:17:12:04 +0000] \"GET /detail.html?id=TEFoZZtPHpxfRN9VVy7m HTTP/1.1\" 200 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] i  hosting: ::1 - - [20/Jul/2024:17:12:19 +0000] "GET /chat.html HTTP/1.1" 200 - "http://localhost:5000/detail.html?id=TEFoZZtPHpxfRN9VVy7m" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [20/Jul/2024:17:12:19 +0000] \"GET /chat.html HTTP/1.1\" 200 - \"http://localhost:5000/detail.html?id=TEFoZZtPHpxfRN9VVy7m\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
+[info] i  hosting: ::1 - - [20/Jul/2024:17:12:19 +0000] "GET /chat.css HTTP/1.1" 200 360 "http://localhost:5000/chat.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [20/Jul/2024:17:12:19 +0000] \"GET /chat.css HTTP/1.1\" 200 360 \"http://localhost:5000/chat.html\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0\""}}
