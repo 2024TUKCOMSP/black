@@ -78,9 +78,9 @@
 
     db.collection('product').doc(productId).get().then((result) => {
       console.log(result.data());
-      $('#title').val(result.data().제목);
-      $('#content').val(result.data().내용);
-      $('#price').val(result.data().가격);
+      $('#title').val(result.data().TITLE);
+      $('#content').val(result.data().CONTENT);
+      $('#price').val(result.data().PRICE);
     });
 
     $('#send').click(function() {
@@ -100,10 +100,10 @@
               console.log('업로드된 경로는', url);
 
               var 바꿀거 = {
-                제목: $('#title').val(),
-                내용: $('#content').val(),
-                가격: $('#price').val(),
-                이미지: url
+                TITLE: $('#title').val(),
+                CONTENT: $('#content').val(),
+                PRICE: $('#price').val(),
+                IMAGE: url
               };
 
               db.collection('product').doc(productId).update(바꿀거)
@@ -118,9 +118,9 @@
         );
       } else {
         var 바꿀거 = {
-          제목: $('#title').val(),
-          내용: $('#content').val(),
-          가격: $('#price').val()
+          TITLE: $('#title').val(),
+          CONTENT: $('#content').val(),
+          PRICE: $('#price').val()
         };
 
         db.collection('product').doc(productId).update(바꿀거)

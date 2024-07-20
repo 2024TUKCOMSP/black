@@ -75,8 +75,8 @@
       <h5>올린사람 : 모름</h5>
       <hr>
       <h5 class="title">상품명</h5>
-      <p class="date">올린날짜</p>
-      <p class="price">가격</p>
+      <p class="date">올린DAY</p>
+      <p class="price">PRICE</p>
     </div>
 </div>
 
@@ -110,19 +110,19 @@
 
         
         판매자uid = result.data().uid;
-        상품명 = result.data().제목;
+        상품명 = result.data().TITLE;
 
         // Timestamp 변환
-        var date = new Date(docData.날짜.seconds * 1000 + docData.날짜.nanoseconds / 1000000);
+        var date = new Date(docData.DAY.seconds * 1000 + docData.DAY.nanoseconds / 1000000);
         var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 
-        // 이미지 URL 사용
-        var imageUrl = docData.이미지;
+        // IMAGE URL 사용
+        var imageUrl = docData.IMAGE;
         // HTML 업데이트
         $('.detail-pic').css('background-image', `url(${imageUrl})`);
-        $('.title').text(docData.제목);
+        $('.title').text(docData.TITLE);
         $('.date').text(formattedDate);
-        $('.price').text(docData.가격 + '원');
+        $('.price').text(docData.PRICE + '원');
       } else {
         console.log('No such document!');
       }
