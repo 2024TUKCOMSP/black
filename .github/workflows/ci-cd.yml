@@ -29,20 +29,22 @@ jobs:
           cd functions
           npm install
 
+      - name: Save Firebase Service Account Key
+        run: |
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > ${{ github.workspace }}/firebase-service-account.json
+
+      - name: Authenticate Firebase
+        run: |
+          firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
+
       - name: Deploy to Firebase Hosting Preview
         if: github.event_name == 'pull_request' && github.base_ref == 'preview'
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          echo ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} > ${GITHUB_WORKSPACE}/firebase-service-account.json
           firebase use --project black-market-129be
-          firebase deploy --only hosting --channel=preview --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
+          firebase deploy --only hosting --channel=preview --project black-market-129be --token ${{ secrets.FIREBASE_TOKEN }} --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
         if: github.ref == 'refs/heads/main'
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          echo ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} > ${GITHUB_WORKSPACE}/firebase-service-account.json
           firebase use --project black-market-129be
-          firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying live"
+          firebase deploy --only hosting --project black-market-129be --token ${{ secrets.FIREBASE_TOKEN }} --message "Deploying live"
