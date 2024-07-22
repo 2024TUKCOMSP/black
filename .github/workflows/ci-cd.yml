@@ -6,6 +6,7 @@ on:
       - main
   pull_request:
     branches:
+      - main
       - preview
 
 jobs:
@@ -29,20 +30,22 @@ jobs:
           cd functions
           npm install
 
-      - name: Save Firebase Service Account Key
-        run: |
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > ${{ github.workspace }}/firebase-service-account.json
-
-      - name: Set up Firebase Authentication
-        run: |
-          export GOOGLE_APPLICATION_CREDENTIALS="${{ github.workspace }}/firebase-service-account.json"
-
       - name: Deploy to Firebase Hosting Preview
         if: github.event_name == 'pull_request' && github.base_ref == 'preview'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase deploy --only hosting --channel=preview --project black-market-129be --message "Deploying preview"
+          echo $FIREBASE_SERVICE_ACCOUNT > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --add black-market-129be
+          firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
         if: github.ref == 'refs/heads/main'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase deploy --only hosting --project black-market-129be --message "Deploying live"
+          echo $FIREBASE_SERVICE_ACCOUNT > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --add black-market-129be
+          firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying live"
