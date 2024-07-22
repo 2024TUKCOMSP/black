@@ -45,7 +45,7 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase hosting:channel:deploy preview --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
+          firebase deploy --only hosting --channel=preview --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
         if: github.ref == 'refs/heads/main'
