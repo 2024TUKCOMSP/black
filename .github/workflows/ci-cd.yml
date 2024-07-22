@@ -6,7 +6,6 @@ on:
       - main
   pull_request:
     branches:
-      - main
       - preview
 
 jobs:
@@ -22,18 +21,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache npm modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.npm
-            ~/.cache
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools@latest
+        run: npm install -g firebase-tools
 
       - name: Install Functions Dependencies
         run: |
@@ -45,6 +34,8 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
+          echo ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --project black-market-129be
           firebase deploy --only hosting --channel=preview --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
@@ -52,4 +43,6 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
+          echo ${{ secrets.FIREBASE_SERVICE_ACCOUNT }} > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --project black-market-129be
           firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying live"
