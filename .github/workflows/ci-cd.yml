@@ -33,18 +33,18 @@ jobs:
         run: |
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > ${{ github.workspace }}/firebase-service-account.json
 
-      - name: Authenticate Firebase
+      - name: Set up Firebase Authentication
         run: |
-          firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
+          export GOOGLE_APPLICATION_CREDENTIALS="${{ github.workspace }}/firebase-service-account.json"
 
       - name: Deploy to Firebase Hosting Preview
         if: github.event_name == 'pull_request' && github.base_ref == 'preview'
         run: |
           firebase use --project black-market-129be
-          firebase deploy --only hosting --channel=preview --project black-market-129be --token ${{ secrets.FIREBASE_TOKEN }} --message "Deploying preview"
+          firebase deploy --only hosting --channel=preview --project black-market-129be --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
         if: github.ref == 'refs/heads/main'
         run: |
           firebase use --project black-market-129be
-          firebase deploy --only hosting --project black-market-129be --token ${{ secrets.FIREBASE_TOKEN }} --message "Deploying live"
+          firebase deploy --only hosting --project black-market-129be --message "Deploying live"
