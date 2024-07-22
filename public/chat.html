@@ -9,55 +9,101 @@
   rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" 
   crossorigin="anonymous">
   <link href="chat.css" rel="stylesheet">
-
+  <style>
+    .chat-list {
+      max-height: 600px;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+      padding-right: 15px;
+    }
+    .chat-room {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      max-height: 600px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-content {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-content li {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .chat-box {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 75%;
+      word-wrap: break-word;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .mine {
+      background: #d1e7dd;
+      margin-left: auto;
+    }
+    .chat-box time {
+      font-size: 0.8em;
+      color: #888;
+      text-align: right;
+      margin-top: 5px;
+    }
+    .input-group {
+      margin-top: auto;
+    }
+    .delete-chat {
+      color: red;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body> 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">블랙마켓</a>
+      <a class="navbar-brand" href="index.html">블랙마켓</a>
+      <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="login.html" id="loginBtn">로그인</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="upload.html" id="uploadBtn">업로드</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-
   <div class="container p-4 detail">
     <div class="row">
       <div class="col-3 p-0">
         <ul class="list-group chat-list">
-          <li class="list-group-item">
-            <h6>채팅방1</h6>
-            <h6 class="text-small">채팅방아이디</h6>
-          </li>
+          <!-- 채팅방 목록 -->
         </ul>
       </div>
       <div class="col-9 p-0">
         <div class="chat-room">
           <ul class="list-group chat-content">
-            <li><span class="chat-box">채팅방1 내용</span></li>
-            <li><span class="chat-box">채팅방1 내용</span></li>
-            <li><span class="chat-box mine">채팅방1 내용</span></li>
+            <!-- 채팅방 내용 -->
           </ul>
           <div class="input-group">
-            <input class="form-control" id="chat-input">
+            <input class="form-control" id="chat-input" placeholder="메시지를 입력하세요...">
             <button class="btn btn-secondary" id="send">전송</button>
           </div>
         </div>
@@ -65,14 +111,10 @@
     </div>
   </div>
   
-  
-  
-
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
   integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" 
   crossorigin="anonymous"></script>
@@ -82,68 +124,144 @@
   
   <script>
     const firebaseConfig = {
-    apiKey: "AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow",
-    authDomain: "black-market-129be.firebaseapp.com",
-    projectId: "black-market-129be",
-    storageBucket: "black-market-129be.appspot.com",
-    messagingSenderId: "31591800098",
-    appId: "1:31591800098:web:a2cc1d42e5b2b6aed9197b"
+      apiKey: "AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow",
+      authDomain: "black-market-129be.firebaseapp.com",
+      projectId: "black-market-129be",
+      storageBucket: "black-market-129be.appspot.com",
+      messagingSenderId: "31591800098",
+      appId: "1:31591800098:web:a2cc1d42e5b2b6aed9197b"
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig) 
-
-  </script>
-
-  <script>
+    firebase.initializeApp(firebaseConfig);
+    
     const db = firebase.firestore();
     const storage = firebase.storage();
-    var 내uid = JSON.parse( localStorage.getItem('user') ).uid;
-    var 채팅방id;
+    const user = JSON.parse(localStorage.getItem('user'));
+    const myUID = user ? user.uid : null;
 
-    db.collection('chatroom').where('who', 'array-contains', 내uid).get().then((result)=>{
-        result.forEach((a)=>{
-            var template = `<li class="list-group-item">
-                    <h6>${a.data().product}</h6>
-                    <h6 class="text-small">${a.id}</h6>
-                </li>`
-            $('.chat-list').append(template)
+    if (!myUID) {
+      alert("로그인이 필요합니다.");
+      window.location.href = 'login.html';
+    }
 
-            $('.list-group-item').click(function(e){
-                채팅방id = $(this).children('.text-small').text();
+    let currentChatRoomId = null;
 
-                e.stopImmediatePropagation();
+    // Load chat rooms
+    db.collection('chatroom').where('who', 'array-contains', myUID).onSnapshot(snapshot => {
+      const chatList = $('.chat-list').empty();
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const otherUserUID = data.who.find(uid => uid !== myUID);
 
-                db.collection('chatroom').doc(채팅방id).collection('messages').orderBy('date').onSnapshot((result)=>{
-                    $('.chat-content').html('');
+        db.collection('user').doc(otherUserUID).get().then(userDoc => {
+          const otherUserName = userDoc.data().nameInfo;
+          const listItem = $(`
+            <li class="list-group-item d-flex justify-content-between align-items-center" data-id="${doc.id}">
+              <div>
+                <h6>${data.product}</h6>
+                <h6 class="text-small">${otherUserName}</h6>
+              </div>
+              <span class="delete-chat">&times;</span>
+            </li>
+          `);
+          chatList.append(listItem);
 
-                    result.forEach((a)=>{
-                        if(a.data().uid == 내uid){
-                            var template2 = `<li><span class="chat-box mine">${a.data().content}</span></li>`;
-                        }
-                        else{
-                            var template2 = `<li><span class="chat-box">${a.data().content}</span></li>`;
-                        }
-                        $('.chat-content').append(template2)
-                    })
-                })
-            })
-        })
-    })
-    
+          // Add click event to load chat
+          listItem.click(function() {
+            const chatRoomId = $(this).data('id');
+            loadChatRoom(chatRoomId);
+          });
 
-    $('#send').click(function(){
-        var 데이터 = {
-            content : $('#chat-input').val(),
-            date : new Date(),
-            uid : 내uid
-        }
+          // Add click event to delete chat room
+          listItem.find('.delete-chat').click(function(e) {
+            e.stopPropagation();
+            const chatRoomId = $(this).closest('.list-group-item').data('id');
+            deleteChatRoom(chatRoomId);
+          });
+        });
+      });
+    });
 
-        db.collection('chatroom').doc(채팅방id).collection('messages').add(데이터)
+    function loadChatRoom(chatRoomId) {
+      currentChatRoomId = chatRoomId;
+      db.collection('chatroom').doc(chatRoomId).collection('messages').orderBy('date').onSnapshot(snapshot => {
+        const chatContent = $('.chat-content').empty();
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const messageItem = $(`
+            <li class="${data.uid === myUID ? 'mine' : ''}">
+              <span class="chat-box">
+                ${data.content}
+                <time>${new Date(data.date.seconds * 1000).toLocaleString()}</time>
+              </span>
+            </li>
+          `);
+          chatContent.append(messageItem);
+        });
+        chatContent.scrollTop(chatContent.prop('scrollHeight'));
+      });
+    }
 
-        })
+    function deleteChatRoom(chatRoomId) {
+      if (confirm("정말 이 채팅방을 삭제하시겠습니까?")) {
+        db.collection('chatroom').doc(chatRoomId).delete().then(() => {
+          alert("채팅방이 삭제되었습니다.");
+          if (currentChatRoomId === chatRoomId) {
+            $('.chat-content').empty();
+            currentChatRoomId = null;
+          }
+        }).catch((error) => {
+          console.error("채팅방 삭제 중 오류 발생: ", error);
+        });
+      }
+    }
 
+    $('#send').click(function() {
+      sendMessage();
+    });
+
+    $('#chat-input').keypress(function(e) {
+      if (e.which === 13) {
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
+      const messageContent = $('#chat-input').val().trim();
+      if (messageContent && currentChatRoomId) {
+        const messageData = {
+          content: messageContent,
+          date: new Date(),
+          uid: myUID
+        };
+        db.collection('chatroom').doc(currentChatRoomId).collection('messages').add(messageData).then(() => {
+          $('#chat-input').val('');
+        });
+      }
+    }
+
+    // 네비게이션 바 로그인/로그아웃 기능 추가
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        $('#userName').text(user.displayName);
+        $('#loginBtn').hide();
+        $('#logoutBtn').show();
+        $('#uploadBtn').show();
+      } else {
+        $('#userName').text("로그인 필요");
+        $('#loginBtn').show();
+        $('#logoutBtn').hide();
+        $('#uploadBtn').hide();
+      }
+    });
+
+    $('#logoutBtn').click(function() {
+      firebase.auth().signOut().then(() => {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+      });
+    });
   </script>
-
 </body>
 </html>

@@ -9,29 +9,29 @@
   rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" 
   crossorigin="anonymous">
   <link href="main.css" rel="stylesheet">
-
 </head>
 <body> 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">블랙마켓</a>
+      <a class="navbar-brand" href="index.html">블랙마켓</a>
+      <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="login.html" id="loginBtn">로그인</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="upload.html" id="uploadBtn">업로드</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="chat.html" id="chatBtn">채팅창</a>
           </li>
         </ul>
       </div>
@@ -48,15 +48,12 @@
         <p class="float-end">♡0</p>
       </div>
     </div> -->
-
   </div>  
-
 
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
   integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" 
   crossorigin="anonymous"></script>
@@ -66,21 +63,42 @@
   
   <script>
     const firebaseConfig = {
-    apiKey: "AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow",
-    authDomain: "black-market-129be.firebaseapp.com",
-    projectId: "black-market-129be",
-    storageBucket: "black-market-129be.appspot.com",
-    messagingSenderId: "31591800098",
-    appId: "1:31591800098:web:a2cc1d42e5b2b6aed9197b"
+      apiKey: "AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow",
+      authDomain: "black-market-129be.firebaseapp.com",
+      projectId: "black-market-129be",
+      storageBucket: "black-market-129be.appspot.com",
+      messagingSenderId: "31591800098",
+      appId: "1:31591800098:web:a2cc1d42e5b2b6aed9197b"
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig) 
-
-  </script>
-
-  <script>
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    
+    // Check login status and toggle buttons
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            $('#userName').text(user.displayName);
+            $('#loginBtn').hide();
+            $('#logoutBtn').show();
+            $('#uploadBtn').show();
+            $('#chatBtn').show();
+        } else {
+            $('#userName').text("로그인 필요");
+            $('#loginBtn').show();
+            $('#logoutBtn').hide();
+            $('#uploadBtn').hide();
+            $('#chatBtn').hide();
+        }
+    });
+
+    $('#logoutBtn').click(function() {
+        firebase.auth().signOut().then(() => {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        });
+    });
+
     db.collection('product').get().then((결과)=>{
       결과.forEach((doc)=>{
         console.log(doc)
@@ -96,7 +114,6 @@
         $('.container').append(템플릿)
       })
     })
-
   </script>
 
 </body>

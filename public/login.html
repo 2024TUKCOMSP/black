@@ -43,7 +43,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">블랙마켓</a>
+      <a class="navbar-brand" href="index.html">블랙마켓</a>
       <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="login.html">Features</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Pricing</a>
@@ -91,9 +91,6 @@
     <button type="submit" class="btn btn-primary" id="logout">로그아웃</button>
   </div> 
      
-
-    
-
   <script>
     const db = firebase.firestore();
     const storage = firebase.storage();
@@ -118,9 +115,10 @@
     });
 
     $('#logout').click(function() {
-        firebase.auth().signOut();
-        localStorage.removeItem('user');
-        $('#userName').html("로그인 필요");
+        firebase.auth().signOut().then(() => {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        });
     });
 
     $('#login').click(function() {
@@ -131,6 +129,7 @@
             console.log(result.user);
             localStorage.setItem('user', JSON.stringify(result.user));
             $('#userName').html(result.user.displayName);
+            window.location.href = 'index.html';
         }).catch((error) => {
             console.error(error);
         });
@@ -142,7 +141,6 @@
         var name = $('#name-new').val();
 
         firebase.auth().createUserWithEmailAndPassword(email, password).then((result) => {
-            
             var userInfo = { nameInfo : name, emailInfo : email }
 
             db.collection('user').doc(result.user.uid).set(userInfo)
@@ -152,11 +150,12 @@
             result.user.updateProfile({ displayName: name }).then(() => {
                 localStorage.setItem('user', JSON.stringify(result.user));
                 $('#userName').html(result.user.displayName);
+                window.location.href = 'index.html';
             });
         }).catch((error) => {
             console.error(error);
         });
     });
-</script>
+  </script>
 </body>
 </html>
