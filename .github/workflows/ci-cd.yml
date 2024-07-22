@@ -1,66 +1,45 @@
-name: CI/CD Pipeline
+name: Firebase Hosting CI/CD
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+      - preview
 
 jobs:
-  build:
-    name: Build
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-      - name: Build
+      - name: Install Functions Dependencies
         run: |
-          # Add commands for your build process here
-          # For example, if you have a build script, you can run it here
-          # npm run build
+          cd functions
+          npm install
 
-  deploy-staging:
-    name: Deploy to Staging
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Deploy to Staging
+      - name: Deploy to Firebase Hosting Preview
+        if: github.ref == 'refs/heads/preview'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase deploy --only hosting --project black-market-129be
+          echo $FIREBASE_SERVICE_ACCOUNT > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --add black-market-129be
+          firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying preview"
 
-      - name: Run Staging Tests
-        run: npm run test-staging
-
-  deploy-production:
-    name: Deploy to Production
-    needs: deploy-staging
-    if: success()
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Deploy to Production
+      - name: Deploy to Firebase Hosting Live
+        if: github.ref == 'refs/heads/main'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase deploy --only hosting --project black-market-129be
-
-      - name: Run Production Tests
-        run: npm run test-production
+          echo $FIREBASE_SERVICE_ACCOUNT > ${GITHUB_WORKSPACE}/firebase-service-account.json
+          firebase use --add black-market-129be
+          firebase deploy --only hosting --project black-market-129be --token $FIREBASE_TOKEN --message "Deploying live"
