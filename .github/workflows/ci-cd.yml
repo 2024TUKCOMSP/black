@@ -40,11 +40,9 @@ jobs:
       - name: Deploy to Firebase Hosting Preview
         if: github.event_name == 'pull_request' && github.base_ref == 'preview'
         run: |
-          firebase use --project black-market-129be
           firebase deploy --only hosting --channel=preview --project black-market-129be --message "Deploying preview"
 
       - name: Deploy to Firebase Hosting Live
         if: github.ref == 'refs/heads/main'
         run: |
-          firebase use --project black-market-129be
           firebase deploy --only hosting --project black-market-129be --message "Deploying live"
