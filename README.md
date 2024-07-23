@@ -1,6 +1,6 @@
-# 당근마켓 앱 개발 프로젝트
+# 중고거래 웹앱 개발 프로젝트
 
-Firebase를 활용한 당근마켓 클론 앱 개발 프로젝트입니다. 당근마켓의 주요 기능들을 구현하고, 사용자 편의를 고려한 UI/UX를 제공합니다. Agile 개발 방법론, Scrum Framework, Git/GitHub, CI/CD, AI Coding Assistant 등을 활용하여 소프트웨어 개발의 전 과정을 학습합니다.
+Firebase를 활용한 중고거래 앱 개발 프로젝트입니다. 중고거래의 주요 기능들을 구현하고, 사용자 편의를 고려한 UI/UX를 제공합니다. Agile 개발 방법론, Scrum Framework, Git/GitHub, CI/CD, AI Coding Assistant 등을 활용하여 소프트웨어 개발의 전 과정을 학습합니다.
 
 ## 목적
 * Firebase를 활용한 간단한 앱 개발을 통해 경험을 쌓고, 기초적인 역량을 강화하는 데 초점을 둡니다.
