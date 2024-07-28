@@ -86,6 +86,15 @@
 
     
     var 내uid = JSON.parse( localStorage.getItem('user') ).uid;
+
+    var 내uid;
+    if (user && user.uid) {
+      $('#edit').prop('disabled', false);
+      내uid = user.uid;
+    } else {
+      $('#edit').prop('disabled', true);
+    }
+
     //채팅방
     $('#chat').click(function(){
       var 데이터 = {
@@ -133,9 +142,6 @@
   })
   
     });
-
-
-
   </script>
 
 </body>
