@@ -9,79 +9,75 @@
   rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" 
   crossorigin="anonymous">
   <link href="main.css" rel="stylesheet">
-
 </head>
-
 <body> 
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" 
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+  crossorigin="anonymous"></script> 
 
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" 
-    crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
-    crossorigin="anonymous"></script> 
-    
-    <script>
-      const firebaseConfig = {
+  <script>
+    const firebaseConfig = {
       apiKey: "AIzaSyCuPWqngYLA--HY_AZdjsyEvo57PfNjrow",
       authDomain: "black-market-129be.firebaseapp.com",
       projectId: "black-market-129be",
       storageBucket: "black-market-129be.appspot.com",
       messagingSenderId: "31591800098",
       appId: "1:31591800098:web:a2cc1d42e5b2b6aed9197b"
-      };
-  
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig) 
-  
-    </script>
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">블랙마켓</a>
+      <a class="navbar-brand" href="index.html">블랙마켓</a>
+      <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="login.html" id="loginBtn">로그인</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="upload.html" id="uploadBtn">업로드</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="chat.html" id="chatBtn">채팅창</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container">
-    상세페이지임
-    <button id="edit">수정하기</button>
-    <button id="chat">채팅</button>
-    <div class="detail-pic my-4" style="background-image: url('https://picsum.photos/400');"></div>
+  <div class="container mt-3">
+    <div class="detail-pic my-4" style="background-image: url('https://picsum.photos/400'); height: 300px;"></div>
     <div>
-      <h5>올린사람 : 모름</h5>
-      <hr>
       <h5 class="title">상품명</h5>
-      <p class="date">올린DAY</p>
+      
+      <p class="uploader">올린 사람: <span id="uploaderName"></span></p>
+      
+      <p class="date">올린 날짜</p>
       <p class="price">가격</p>
+      <p class="description">설명</p>
+      <button id="edit" class="btn btn-primary">수정하기</button>
+      <button id="chat" class="btn btn-success">채팅</button>
     </div>
-</div>
+  </div>
 
   <script>
-    
     const db = firebase.firestore();
 
     
@@ -112,37 +108,67 @@
 
     var 쿼리스트링 = new URLSearchParams(window.location.search);
 
-    db.collection('product').doc(쿼리스트링.get('id')).get().then((result) => {
+    db.collection('product').doc(productId).get().then((result) => {
       if (result.exists) {
-        console.log(result.data());
-        var docData = result.data();
+        const data = result.data();
+        console.log("Product data:", data);
+        const formattedDate = new Date(data.날짜.seconds * 1000).toLocaleDateString();
 
-        
-        판매자uid = result.data().uid;
-        상품명 = result.data().제목;
+        document.querySelector('.detail-pic').style.backgroundImage = `url(${data.이미지})`;
+        document.querySelector('.title').textContent = data.제목;
+        document.querySelector('.date').textContent = formattedDate;
+        document.querySelector('.price').textContent = `${data.가격}원`;
+        document.querySelector('.description').textContent = data.내용;
+        document.getElementById('uploaderName').textContent = data.이름;
 
-        // Timestamp 변환
-        var date = new Date(docData.날짜.seconds * 1000 + docData.날짜.nanoseconds / 1000000);
-        var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        const 판매자uid = data.uid;
+        const 상품명 = data.제목;
 
-        // 이미지 URL 사용
-        var imageUrl = docData.이미지;
-        // HTML 업데이트
-        $('.detail-pic').css('background-image', `url(${imageUrl})`);
-        $('.title').text(docData.제목);
-        $('.date').text(formattedDate);
-        $('.price').text(docData.가격 + '원');
+        document.getElementById('edit').addEventListener('click', () => {
+          window.location.href = `/edit.html?id=${productId}`;
+        });
+
+        document.getElementById('chat').addEventListener('click', () => {
+          const chatData = {
+            who: [판매자uid, JSON.parse(localStorage.getItem('user')).uid],
+            product: 상품명,
+            date: new Date()
+          };
+          db.collection('chatroom').add(chatData).then(() => {
+            window.location.href = '/chat.html';
+          }).catch((error) => {
+            console.error("채팅방 생성 중 오류 발생: ", error);
+          });
+        });
       } else {
         console.log('No such document!');
       }
+    }).catch((error) => {
+      console.error("Error getting document:", error);
+    });
 
-       var 쿼리스트링 = new URLSearchParams(window.location.search)
-  $('#edit').click(function(){
-    window.location.href = '/edit.html?id=' + 쿼리스트링.get('id')
-  })
-  
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        $('#userName').text(user.displayName);
+        $('#loginBtn').hide();
+        $('#logoutBtn').show();
+        $('#uploadBtn').show();
+        $('#chatBtn').show();
+      } else {
+        $('#userName').text("로그인 필요");
+        $('#loginBtn').show();
+        $('#logoutBtn').hide();
+        $('#uploadBtn').hide();
+        $('#chatBtn').hide();
+      }
+    });
+
+    $('#logoutBtn').click(function() {
+      firebase.auth().signOut().then(() => {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+      });
     });
   </script>
-
 </body>
 </html>

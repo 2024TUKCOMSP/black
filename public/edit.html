@@ -38,23 +38,24 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">블랙마켓</a>
+      <a class="navbar-brand" href="index.html">블랙마켓</a>
+      <span class="ms-auto mx-2" id="userName">|</span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="login.html" id="loginBtn">로그인</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="upload.html" id="uploadBtn">업로드</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="chat.html" id="chatBtn">채팅창</a>
           </li>
         </ul>
       </div>
@@ -66,71 +67,102 @@
     <textarea class="form-control mt-2" id="content">content</textarea>
     <input type="text" class="form-control mt-2" id="price" placeholder="price">
     <input class="form-control mt-2" type="file" id="image">
-    <button class="btn btn-danger mt-3" id="send">올리기</button>
+    <button class="btn btn-danger mt-3" id="send">수정하기</button>
+    <button class="btn btn-warning mt-3" id="delete">삭제하기</button>
   </div>
 
   <script>
     const db = firebase.firestore();
     const storage = firebase.storage();
 
-    const querryString = new URLSearchParams(window.location.search);
-    const productId = querryString.get('id');
+    const queryString = new URLSearchParams(window.location.search);
+    const productId = queryString.get('id');
 
+    // 기존 데이터 로드
     db.collection('product').doc(productId).get().then((result) => {
-      console.log(result.data());
-      $('#title').val(result.data().제목);
-      $('#content').val(result.data().내용);
-      $('#price').val(result.data().가격);
+      if (result.exists) {
+        const data = result.data();
+        document.getElementById('title').value = data.제목;
+        document.getElementById('content').value = data.내용;
+        document.getElementById('price').value = data.가격;
+      } else {
+        console.log('No such document!');
+      }
+    }).catch((error) => {
+      console.error("Error getting document:", error);
     });
 
-    $('#send').click(function() {
-      var file = document.querySelector('#image').files[0];
-      if (file) {
-        var storageRef = storage.ref();
-        var 저장할경로 = storageRef.child('image/' + file.name);
-        var 업로드작업 = 저장할경로.put(file);
-
-        업로드작업.on('state_changed', 
-          null, 
-          (error) => {
-            console.error('실패사유는', error);
-          }, 
-          () => {
-            업로드작업.snapshot.ref.getDownloadURL().then((url) => {
-              console.log('업로드된 경로는', url);
-
-              var 바꿀거 = {
-                제목: $('#title').val(),
-                내용: $('#content').val(),
-                가격: $('#price').val(),
-                이미지: url
-              };
-
-              db.collection('product').doc(productId).update(바꿀거)
-              .then(() => {
-                window.location.href = '/index.html';
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-            });
-          }
-        );
-      } else {
-        var 바꿀거 = {
+    $('#send').click(function(){
+        var file = document.querySelector('#image').files[0];
+        var updateData = {
           제목: $('#title').val(),
           내용: $('#content').val(),
-          가격: $('#price').val()
+          가격: $('#price').val(),
         };
 
-        db.collection('product').doc(productId).update(바꿀거)
-        .then(() => {
-          window.location.href = '/index.html';
-        })
-        .catch((error) => {
-          console.log(error);
+        if (file) {
+          var storageRef = storage.ref();
+          var 저장할경로 = storageRef.child('image/' + file.name);
+          var 업로드작업 = 저장할경로.put(file);
+
+          업로드작업.on('state_changed', 
+              null, 
+              (error) => {
+                  console.error('실패사유는', error);
+              }, 
+              () => {
+                  업로드작업.snapshot.ref.getDownloadURL().then((url) => {
+                      console.log('업로드된 경로는', url);
+                      updateData.이미지 = url;
+                      db.collection('product').doc(productId).update(updateData).then(() => {
+                          window.location.href = `/detail.html?id=${productId}`;
+                      }).catch((error)=>{
+                          console.error("Error updating document:", error);
+                      });
+                  });    
+              }
+          );
+        } else {
+          db.collection('product').doc(productId).update(updateData).then(() => {
+              window.location.href = `/detail.html?id=${productId}`;
+          }).catch((error)=>{
+              console.error("Error updating document:", error);
+          });
+        }
+    });
+
+    $('#delete').click(function(){
+      if(confirm('정말로 이 제품을 삭제하시겠습니까?')) {
+        db.collection('product').doc(productId).delete().then(() => {
+          alert('제품이 삭제되었습니다.');
+          window.location.href = 'index.html';
+        }).catch((error) => {
+          console.error('Error deleting document:', error);
         });
       }
+    });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        $('#userName').text(user.displayName);
+        $('#loginBtn').hide();
+        $('#logoutBtn').show();
+        $('#uploadBtn').show();
+        $('#chatBtn').show();
+      } else {
+        $('#userName').text("로그인 필요");
+        $('#loginBtn').show();
+        $('#logoutBtn').hide();
+        $('#uploadBtn').hide();
+        $('#chatBtn').hide();
+      }
+    });
+
+    $('#logoutBtn').click(function() {
+      firebase.auth().signOut().then(() => {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+      });
     });
   </script>
 </body>
