@@ -80,33 +80,8 @@
   <script>
     const db = firebase.firestore();
 
-    
-    var 내uid = JSON.parse( localStorage.getItem('user') ).uid;
-
-    var 내uid;
-    if (user && user.uid) {
-      $('#edit').prop('disabled', false);
-      내uid = user.uid;
-    } else {
-      $('#edit').prop('disabled', true);
-    }
-
-    //채팅방
-    $('#chat').click(function(){
-      var 데이터 = {
-        who : [내uid, 판매자uid ],
-        product : 상품명,
-        date : new Date()
-      }
-      db.collection('chatroom').add(데이터)
-      window.location.href = '/chat.html';
-    })
-
-    var 판매자uid;
-    var 상품명;
-    
-
-    var 쿼리스트링 = new URLSearchParams(window.location.search);
+    const queryString = new URLSearchParams(window.location.search);
+    const productId = queryString.get('id');
 
     db.collection('product').doc(productId).get().then((result) => {
       if (result.exists) {
