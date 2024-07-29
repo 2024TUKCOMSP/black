@@ -79,30 +79,30 @@
 
   <script>
     const db = firebase.firestore();
-
+  
     const queryString = new URLSearchParams(window.location.search);
     const productId = queryString.get('id');
-
+  
     db.collection('product').doc(productId).get().then((result) => {
       if (result.exists) {
         const data = result.data();
         console.log("Product data:", data);
         const formattedDate = new Date(data.날짜.seconds * 1000).toLocaleDateString();
-
+  
         document.querySelector('.detail-pic').style.backgroundImage = `url(${data.이미지})`;
         document.querySelector('.title').textContent = data.제목;
         document.querySelector('.date').textContent = formattedDate;
         document.querySelector('.price').textContent = `${data.가격}원`;
         document.querySelector('.description').textContent = data.내용;
         document.getElementById('uploaderName').textContent = data.이름;
-
+  
         const 판매자uid = data.uid;
         const 상품명 = data.제목;
-
+  
         document.getElementById('edit').addEventListener('click', () => {
           window.location.href = `/edit.html?id=${productId}`;
         });
-
+  
         document.getElementById('chat').addEventListener('click', () => {
           const chatData = {
             who: [판매자uid, JSON.parse(localStorage.getItem('user')).uid],
@@ -121,7 +121,7 @@
     }).catch((error) => {
       console.error("Error getting document:", error);
     });
-
+  
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         $('#userName').text(user.displayName);
@@ -129,21 +129,25 @@
         $('#logoutBtn').show();
         $('#uploadBtn').show();
         $('#chatBtn').show();
+        $('#edit').prop('disabled', false); // 로그인된 경우 수정 버튼 활성화
+        $('#chat').prop('disabled', false); // 로그인된 경우 채팅 버튼 활성화
       } else {
         $('#userName').text("로그인 필요");
         $('#loginBtn').show();
         $('#logoutBtn').hide();
         $('#uploadBtn').hide();
         $('#chatBtn').hide();
+        $('#edit').prop('disabled', true); // 로그인이 안된 경우 수정 버튼 비활성화
+        $('#chat').prop('disabled', true); // 로그인이 안된 경우 채팅 버튼 비활성화
       }
     });
-
+  
     $('#logoutBtn').click(function() {
       firebase.auth().signOut().then(() => {
         localStorage.removeItem('user');
         window.location.href = 'index.html';
       });
     });
-  </script>
+  </script>  
 </body>
 </html>
