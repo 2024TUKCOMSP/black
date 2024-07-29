@@ -83,21 +83,53 @@
     const queryString = new URLSearchParams(window.location.search);
     const productId = queryString.get('id');
   
+    let currentUser = null; // 현재 로그인한 사용자 정보를 저장할 변수
+  
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = user;
+        $('#userName').text(user.displayName);
+        $('#loginBtn').hide();
+        $('#logoutBtn').show();
+        $('#uploadBtn').show();
+        $('#chatBtn').show();
+        $('#chat').prop('disabled', false);
+  
+        // 제품 데이터를 가져온 후 수정 버튼 활성화 여부 결정
+        if (productData && currentUser.uid === productData.uid) {
+          $('#edit').prop('disabled', false);
+        } else {
+          $('#edit').prop('disabled', true);
+        }
+      } else {
+        currentUser = null;
+        $('#userName').text("로그인 필요");
+        $('#loginBtn').show();
+        $('#logoutBtn').hide();
+        $('#uploadBtn').hide();
+        $('#chatBtn').hide();
+        $('#edit').prop('disabled', true);
+        $('#chat').prop('disabled', true);
+      }
+    });
+  
+    let productData = null; // 제품 데이터를 저장할 변수
+  
     db.collection('product').doc(productId).get().then((result) => {
       if (result.exists) {
-        const data = result.data();
-        console.log("Product data:", data);
-        const formattedDate = new Date(data.날짜.seconds * 1000).toLocaleDateString();
+        productData = result.data();
+        console.log("Product data:", productData);
+        const formattedDate = new Date(productData.날짜.seconds * 1000).toLocaleDateString();
   
-        document.querySelector('.detail-pic').style.backgroundImage = `url(${data.이미지})`;
-        document.querySelector('.title').textContent = data.제목;
+        document.querySelector('.detail-pic').style.backgroundImage = `url(${productData.이미지})`;
+        document.querySelector('.title').textContent = productData.제목;
         document.querySelector('.date').textContent = formattedDate;
-        document.querySelector('.price').textContent = `${data.가격}원`;
-        document.querySelector('.description').textContent = data.내용;
-        document.getElementById('uploaderName').textContent = data.이름;
+        document.querySelector('.price').textContent = `${productData.가격}원`;
+        document.querySelector('.description').textContent = productData.내용;
+        document.getElementById('uploaderName').textContent = productData.이름;
   
-        const 판매자uid = data.uid;
-        const 상품명 = data.제목;
+        const 판매자uid = productData.uid;
+        const 상품명 = productData.제목;
   
         document.getElementById('edit').addEventListener('click', () => {
           window.location.href = `/edit.html?id=${productId}`;
@@ -115,31 +147,20 @@
             console.error("채팅방 생성 중 오류 발생: ", error);
           });
         });
+  
+        // 사용자 정보가 이미 로드된 상태라면 수정 버튼 상태를 확인
+        if (currentUser) {
+          if (currentUser.uid === productData.uid) {
+            $('#edit').prop('disabled', false);
+          } else {
+            $('#edit').prop('disabled', true);
+          }
+        }
       } else {
         console.log('No such document!');
       }
     }).catch((error) => {
       console.error("Error getting document:", error);
-    });
-  
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        $('#userName').text(user.displayName);
-        $('#loginBtn').hide();
-        $('#logoutBtn').show();
-        $('#uploadBtn').show();
-        $('#chatBtn').show();
-        $('#edit').prop('disabled', false); // 로그인된 경우 수정 버튼 활성화
-        $('#chat').prop('disabled', false); // 로그인된 경우 채팅 버튼 활성화
-      } else {
-        $('#userName').text("로그인 필요");
-        $('#loginBtn').show();
-        $('#logoutBtn').hide();
-        $('#uploadBtn').hide();
-        $('#chatBtn').hide();
-        $('#edit').prop('disabled', true); // 로그인이 안된 경우 수정 버튼 비활성화
-        $('#chat').prop('disabled', true); // 로그인이 안된 경우 채팅 버튼 비활성화
-      }
     });
   
     $('#logoutBtn').click(function() {
@@ -148,6 +169,7 @@
         window.location.href = 'index.html';
       });
     });
-  </script>  
+  </script>
+  
 </body>
 </html>
