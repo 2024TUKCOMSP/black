@@ -78,97 +78,127 @@
   </div>
 
   <script>
-    const db = firebase.firestore();
-  
-    const queryString = new URLSearchParams(window.location.search);
-    const productId = queryString.get('id');
-  
-    let currentUser = null; // 현재 로그인한 사용자 정보를 저장할 변수
-  
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        currentUser = user;
-        $('#userName').text(user.displayName);
-        $('#loginBtn').hide();
-        $('#logoutBtn').show();
-        $('#uploadBtn').show();
-        $('#chatBtn').show();
-        $('#chat').prop('disabled', false);
-  
-        // 제품 데이터를 가져온 후 수정 버튼 활성화 여부 결정
-        if (productData && currentUser.uid === productData.uid) {
-          $('#edit').prop('disabled', false);
-        } else {
-          $('#edit').prop('disabled', true);
-        }
-      } else {
-        currentUser = null;
-        $('#userName').text("로그인 필요");
-        $('#loginBtn').show();
-        $('#logoutBtn').hide();
-        $('#uploadBtn').hide();
-        $('#chatBtn').hide();
-        $('#edit').prop('disabled', true);
-        $('#chat').prop('disabled', true);
-      }
+   const db = firebase.firestore();
+
+const queryString = new URLSearchParams(window.location.search);
+const productId = queryString.get('id');
+
+let currentUser = null; // 현재 로그인한 사용자 정보를 저장할 변수
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    currentUser = user;
+    $('#userName').text(user.displayName);
+    $('#loginBtn').hide();
+    $('#logoutBtn').show();
+    $('#uploadBtn').show();
+    $('#chatBtn').show();
+    $('#chat').prop('disabled', false);
+
+    // 제품 데이터를 가져온 후 수정 버튼 활성화 여부 결정
+    if (productData && currentUser.uid === productData.uid) {
+      $('#edit').prop('disabled', false);
+    } else {
+      $('#edit').prop('disabled', true);
+    }
+  } else {
+    currentUser = null;
+    $('#userName').text("로그인 필요");
+    $('#loginBtn').show();
+    $('#logoutBtn').hide();
+    $('#uploadBtn').hide();
+    $('#chatBtn').hide();
+    $('#edit').prop('disabled', true);
+    $('#chat').prop('disabled', true);
+  }
+});
+
+let productData = null; // 제품 데이터를 저장할 변수
+
+db.collection('product').doc(productId).get().then((result) => {
+  if (result.exists) {
+    productData = result.data();
+    console.log("Product data:", productData);
+    const formattedDate = new Date(productData.날짜.seconds * 1000).toLocaleDateString();
+
+    document.querySelector('.detail-pic').style.backgroundImage = `url(${productData.이미지})`;
+    document.querySelector('.title').textContent = productData.제목;
+    document.querySelector('.date').textContent = formattedDate;
+    document.querySelector('.price').textContent = `${productData.가격}원`;
+    document.querySelector('.description').textContent = productData.내용;
+    document.getElementById('uploaderName').textContent = productData.이름;
+
+    const 판매자uid = productData.uid;
+    const 상품명 = productData.제목;
+
+    document.getElementById('edit').addEventListener('click', () => {
+      window.location.href = `/edit.html?id=${productId}`;
     });
-  
-    let productData = null; // 제품 데이터를 저장할 변수
-  
-    db.collection('product').doc(productId).get().then((result) => {
-      if (result.exists) {
-        productData = result.data();
-        console.log("Product data:", productData);
-        const formattedDate = new Date(productData.날짜.seconds * 1000).toLocaleDateString();
-  
-        document.querySelector('.detail-pic').style.backgroundImage = `url(${productData.이미지})`;
-        document.querySelector('.title').textContent = productData.제목;
-        document.querySelector('.date').textContent = formattedDate;
-        document.querySelector('.price').textContent = `${productData.가격}원`;
-        document.querySelector('.description').textContent = productData.내용;
-        document.getElementById('uploaderName').textContent = productData.이름;
-  
-        const 판매자uid = productData.uid;
-        const 상품명 = productData.제목;
-  
-        document.getElementById('edit').addEventListener('click', () => {
-          window.location.href = `/edit.html?id=${productId}`;
-        });
-  
-        document.getElementById('chat').addEventListener('click', () => {
-          const chatData = {
-            who: [판매자uid, JSON.parse(localStorage.getItem('user')).uid],
-            product: 상품명,
-            date: new Date()
-          };
-          db.collection('chatroom').add(chatData).then(() => {
-            window.location.href = '/chat.html';
-          }).catch((error) => {
-            console.error("채팅방 생성 중 오류 발생: ", error);
+
+    document.getElementById('chat').addEventListener('click', () => {
+      const buyerUID = JSON.parse(localStorage.getItem('user')).uid;
+
+      console.log('Chat button clicked');
+      console.log('판매자uid:', 판매자uid);
+      console.log('buyerUID:', buyerUID);
+      console.log('상품명:', 상품명);
+
+      // 기존 채팅방이 있는지 확인
+      db.collection('chatroom')
+        .where('who', 'array-contains', 판매자uid)
+        .get()
+        .then(snapshot => {
+          let chatRoomFound = false;
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.who.includes(buyerUID) && data.product === 상품명) {
+              chatRoomFound = true;
+              console.log('Existing chat room:', doc.id);
+              window.location.href = `/chat.html`;
+              return false; // forEach 중지
+            }
           });
-        });
-  
-        // 사용자 정보가 이미 로드된 상태라면 수정 버튼 상태를 확인
-        if (currentUser) {
-          if (currentUser.uid === productData.uid) {
-            $('#edit').prop('disabled', false);
-          } else {
-            $('#edit').prop('disabled', true);
+          if (!chatRoomFound) {
+            // 새로운 채팅방 생성
+            const chatData = {
+              who: [판매자uid, buyerUID],
+              product: 상품명,
+              date: new Date()
+            };
+            db.collection('chatroom').add(chatData).then((docRef) => {
+              console.log('New chat room created:', docRef.id);
+              window.location.href = `/chat.html`;
+            }).catch((error) => {
+              console.error("채팅방 생성 중 오류 발생: ", error);
+            });
           }
-        }
+        }).catch((error) => {
+          console.error("채팅방 중복 확인 중 오류 발생: ", error);
+        });
+    });
+
+    // 사용자 정보가 이미 로드된 상태라면 수정 버튼 상태를 확인
+    if (currentUser) {
+      if (currentUser.uid === productData.uid) {
+        $('#edit').prop('disabled', false);
       } else {
-        console.log('No such document!');
+        $('#edit').prop('disabled', true);
       }
-    }).catch((error) => {
-      console.error("Error getting document:", error);
-    });
-  
-    $('#logoutBtn').click(function() {
-      firebase.auth().signOut().then(() => {
-        localStorage.removeItem('user');
-        window.location.href = 'index.html';
-      });
-    });
+    }
+  } else {
+    console.log('No such document!');
+  }
+}).catch((error) => {
+  console.error("Error getting document:", error);
+});
+
+$('#logoutBtn').click(function() {
+  firebase.auth().signOut().then(() => {
+    localStorage.removeItem('user');
+    window.location.href = 'index.html';
+  });
+});
+
   </script>
   
 </body>
