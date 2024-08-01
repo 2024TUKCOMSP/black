@@ -26,20 +26,19 @@
   display: flex;
   margin-bottom: 10px;
 }
-
 .chat-box {
-  background: #f1f1f1;
+  background: #f1f1f1; /* 모든 메시지에 동일한 배경색 적용 */
   padding: 10px;
   border-radius: 10px;
   max-width: 75%;
   word-wrap: break-word;
-  display: inline-block;
   position: relative;
+  display: inline-block;
 }
 
 .mine {
-  background: #d1e7dd;
-  margin-left: auto;
+  margin-left: auto; /* 보낸 메시지를 오른쪽으로 정렬 */
+  background: #f1f1f1 !important; /* 강제적으로 배경색 변경 */
 }
 
 .chat-box time {
@@ -49,7 +48,6 @@
   text-align: right;
   margin-top: 5px;
 }
-
 .input-group {
   margin-top: auto;
 }
