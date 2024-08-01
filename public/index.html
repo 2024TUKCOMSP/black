@@ -109,6 +109,16 @@
       }
     });
 
+    // 엔터 키로 검색
+    document.getElementById('search-input').addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        const searchQuery = document.getElementById('search-input').value.trim();
+        if (searchQuery) {
+          searchProducts(searchQuery);
+        }
+      }
+    });
+
     function searchProducts(query) {
       db.collection('product')
         .where('제목', '>=', query)
