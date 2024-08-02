@@ -32,6 +32,7 @@ Firebase를 활용한 중고거래 앱 개발 프로젝트입니다. 중고거�
 * [Firebase로 만드는 당근마켓, 코딩애플] [https://www.youtube.com/watch?v=9RkXchEJgKU]
 * [코딩애플] [https://codingapple.com/]
 * [파이어베이스 블로그][https://blog.naver.com/mythee1/223490174039]
+* [앱 링크][https://black-market-129be.web.app/]
   
 ## 회의 시간
   **매주 화 목 오후 4시**
